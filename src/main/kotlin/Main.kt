@@ -1,7 +1,23 @@
-fun main(args: Array<String>) {
-    println("Hello World!")
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlin.concurrent.thread
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
+fun main(args: Array<String>)= runBlocking {
+    println("Hey program starts here: ${Thread.currentThread().name}")
+    GlobalScope.launch {
+        delay(1000)
+        println("Sumit is working in background thread: ${Thread.currentThread().name}")
+    }
+    Thread.sleep(2000)
+    println("hey program ends here: ${Thread.currentThread().name}")
 }
+
+
+
+
+
+
+
+
