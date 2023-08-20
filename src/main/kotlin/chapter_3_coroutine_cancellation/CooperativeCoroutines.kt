@@ -164,23 +164,56 @@ fun main(args: Array<String>) = runBlocking {
  */
 
 
+/**
+ * use of withTimeout{}
+fun main(args: Array<String>) = runBlocking {
+    println("Hey program starts here")
+
+    try{
+        withTimeout(500) {
+            for (i in 1..500) {
+                print("$i.")
+                delay(100)
+            }
+        }
+    }catch (ex:CancellationException){
+        println("\nCaught successfully: ${ex.message} ")
+    }finally {
+        println("Finally block executed")
+    }
+
+    println("oops program ends here")
+}
+ */
+
+
+/**
+ * withTimeoutOrNull, case- timeout not occured
+ *
+fun main(args: Array<String>) = runBlocking {
+    println("Hey program starts here")
+    val result = withTimeoutOrNull(500) {
+        for (i in 1..500) {
+            print("$i.")
+        }
+        "returning from the coroutine"
+    }
+    println("\n$result")
+    println("oops program ends here")
+}
+ */
+
+
 
 fun main(args: Array<String>) = runBlocking {
     println("Hey program starts here")
-    val job: Job = launch(Dispatchers.Default) {
-        try {
-            for (i in 1..1500) {
-                print("$i ")
-                yield()
-            }
-        } catch (ex: CancellationException) {
-            println("\nCaught the exception: ${ex.message}")
-        } finally {
-            println("finally block")
+    val result = withTimeoutOrNull(500) {
+        for (i in 1..500) {
+            delay(100)
+            print("$i.")
         }
+        "returning from the coroutine"
     }
-    delay(1)
-    job.cancel(CancellationException("Hurray! My custom exception"))
-    job.join()
+    println("\n$result")
     println("oops program ends here")
 }
